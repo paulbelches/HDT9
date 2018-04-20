@@ -38,7 +38,7 @@ public class HDT9 {
 		BufferedReader br;
 		String text = "";
 		try {
-			f = new File("./texto.txt");
+			f = new File("./text.txt");
 			fr = new FileReader(f);
 			br = new BufferedReader(fr);
 			String linea;
@@ -47,24 +47,25 @@ public class HDT9 {
 				text = text + linea;
 
 			}
+                        text.toLowerCase();
+                        String[] words = text.split(" ");
+                        String translation = "";
+                        for (int i = 0; i < words.length; i++) {
+                            if (words[i].contains(".")) {
+                               	String[] lastword = words[i].split(".");
+				translation = translation + diccionario.Buscar(lastword[i], diccionario.getRaiz()) + ". ";
+                            } else {
+				translation = translation + diccionario.Buscar(words[i], diccionario.getRaiz()) + " ";
+                            }
+                        }
+
+		System.out.println(translation);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Se produjo un error:" + e);
 		}
-		text.toLowerCase();
-		String[] words = text.split(" ");
-		String translation = "";
-		for (int i = 0; i < words.length; i++) {
-			if (words[i].contains(".")) {
-				String[] lastword = words[i].split(".");
-				translation = translation + diccionario.Buscar(lastword[i], diccionario.getRaiz()) + ". ";
-			} else {
-				translation = translation + diccionario.Buscar(words[i], diccionario.getRaiz()) + " ";
-			}
-		}
-
-		System.out.println(translation);
+                
 
 	}
 

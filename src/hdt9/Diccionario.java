@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * 
  */
 public class Diccionario {
-	private Nodo<Association<String,String>> raiz;
+	private NodoRedBlack<Association<String,String>> raiz;
 
 	public Diccionario() throws FileNotFoundException {
 		raiz = llenar("./diccionario.txt");
@@ -31,7 +31,7 @@ public class Diccionario {
 	 *
 	 * @return
 	 */
-	public Nodo<Association <String,String>> getRaiz() {
+	public NodoRedBlack<Association <String,String>> getRaiz() {
 		return raiz;
 	}
 
@@ -39,7 +39,7 @@ public class Diccionario {
 	 *
 	 * @param raiz
 	 */
-	public void setRaiz(Nodo<Association <String,String>> raiz) {
+	public void setRaiz(NodoRedBlack<Association <String,String>> raiz) {
 		this.raiz = raiz;
 	}
 
@@ -50,9 +50,9 @@ public class Diccionario {
 	 * @param nodo
 	 * @return
 	 */
-	public Nodo<Association <String,String>> insertar(String valor, Nodo<Association <String,String>> nodo) {
+	public NodoRedBlack<Association <String,String>> insertar(String valor, NodoRedBlack<Association <String,String>> nodo) {
 		if (nodo == null) {
-			nodo = new Nodo<Association<String,String>>(valor);
+			nodo = new NodoRedBlack<Association<String,String>>(valor);
 		} else {
 			String sep = Pattern.quote(",");
 			String[] partes2 = valor.split(sep);
@@ -74,7 +74,7 @@ public class Diccionario {
 	 * @param nodo
 	 * @return
 	 */
-	public String Buscar(String palabra, Nodo<Association <String,String>> nodo) {
+	public String Buscar(String palabra, NodoRedBlack<Association <String,String>> nodo) {
 		String s = nodo.getValor().key.toString();
 		if (s.compareTo(palabra) == 0) {
 			return nodo.getValor().value.toString();
@@ -95,7 +95,7 @@ public class Diccionario {
 	 * @param nodo
 	 * @return
 	 */
-	public Map<String, String> coleccion(Map<String, String> mapa, Nodo<Association <String, String>> nodo) {
+	public Map<String, String> coleccion(Map<String, String> mapa, NodoRedBlack<Association <String, String>> nodo) {
 		if (nodo.getIzquierda() != null)
 			mapa = coleccion(mapa, nodo.getIzquierda());
 		mapa.put(nodo.getValor().getKey().toString(), nodo.getValor().getValue().toString());
@@ -110,11 +110,11 @@ public class Diccionario {
      * @return
 	 * @throws FileNotFoundException 
      */
-    public Nodo<Association <String,String>> llenar(String linea) throws FileNotFoundException {
+    public NodoRedBlack<Association <String,String>> llenar(String linea) throws FileNotFoundException {
         File f = new File("./diccionario.txt");
         FileReader fr = new FileReader(f);
         BufferedReader br = new BufferedReader (fr);
-        Nodo<Association<String,String>> nodo = null;
+        NodoRedBlack<Association<String,String>> nodo = null;
         try {
 
 			while ((linea = br.readLine()) != null) {

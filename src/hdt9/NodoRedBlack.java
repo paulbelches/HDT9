@@ -15,29 +15,49 @@ import java.util.regex.Pattern;
  * 
  * @param <E>
  */
-public class Nodo<E> {
+public class NodoRedBlack<E> {
 
-    private Nodo<E> izquierda;
-    private Nodo<E> derecha;
+    private NodoRedBlack<E> izquierda;
+    private NodoRedBlack<E> derecha;
+    private NodoRedBlack<E> parent;
     private Association<String,String> valor;
+    private boolean color;
 
     /**
      *
      * @param valor
      */
-    public Nodo(String valor) {
+    public NodoRedBlack(String valor) {
         String sep = Pattern.quote(",");
         String[] partes = valor.split(sep);
         this.izquierda = null;
         this.derecha = null;
+        this.parent = null;
         this.valor = new Association<String,String>(partes[0], partes[1]);
+        this.color = false;  // negro: False, rojo: True
     }
 
+    public NodoRedBlack<E> getParent() {
+        return parent;
+    }
+
+    public void setParent(NodoRedBlack<E> parent) {
+        this.parent = parent;
+    }
+
+    public boolean isColor() {
+        return color;
+    }
+
+    public void setColor(boolean color) {
+        this.color = color;
+    }
+    
     /**
      *
      * @return
      */
-    public Nodo<E> getIzquierda() {
+    public NodoRedBlack<E> getIzquierda() {
         return izquierda;
     }
 
@@ -45,7 +65,7 @@ public class Nodo<E> {
      *
      * @param izquierda
      */
-    public void setIzquierda(Nodo<E> izquierda) {
+    public void setIzquierda(NodoRedBlack<E> izquierda) {
         this.izquierda = izquierda;
     }
 
@@ -53,7 +73,7 @@ public class Nodo<E> {
      *
      * @return
      */
-    public Nodo<E> getDerecha() {
+    public NodoRedBlack<E> getDerecha() {
         return derecha;
     }
 
@@ -61,7 +81,7 @@ public class Nodo<E> {
      *
      * @param derecha
      */
-    public void setDerecha(Nodo<E> derecha) {
+    public void setDerecha(NodoRedBlack<E> derecha) {
         this.derecha = derecha;
     }
 
