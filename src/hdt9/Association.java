@@ -39,4 +39,8 @@ public class Association<K, V> implements Map.Entry<K, V> {
 	public V setValue(V value) {
 		return this.value = value;// To change body of generated methods, choose Tools | Templates.
 	}
+
+    int compareTo(Comparable x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

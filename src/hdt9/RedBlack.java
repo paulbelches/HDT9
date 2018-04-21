@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  * @author paulb
  */
-public class RedBlack {
+public class RedBlack implements TreeInterface{
     private NodoRedBlack<Association<String,String>> raiz;
     public RedBlack(String s) throws FileNotFoundException {
         raiz = null;
@@ -212,6 +212,20 @@ public Map<String, String> coleccion(Map<String, String> mapa, NodoRedBlack<Asso
 	catch (Exception e) {
 			System.err.println("Se produjo un error:" + e);
 		}
+    }
+
+    public void insertar(Association<String, String> x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Association<String,String> Buscar(String x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertar(String x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
