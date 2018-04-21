@@ -12,8 +12,8 @@ package hdt9;
 public interface TreeInterface {
     
     public void insertar(NodoRedBlack<Association <String,String>> nodo);
-    public void insertar( Association<String,String> x);
+    public void insertar(String x);
     
     public String Buscar(String palabra, NodoRedBlack<Association <String,String>> nodo);
-    public String Buscar(String x);
+    public Association<String,String> Buscar(String x);
 }

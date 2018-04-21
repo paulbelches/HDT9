@@ -6,8 +6,7 @@
 package hdt9;
 
 
-public class SplayTree
-    {
+public class SplayTree implements TreeInterface    {
         /**
          * Construct the tree.
          */
@@ -130,7 +129,7 @@ public class SplayTree
          * @param x the item to search for.
          * @return the matching item or null if not found.
          */
-        public Association<String,String> Buscar( String x )
+        public Association<String,String> Buscar(String x)
         {
             root = splay( x, root );
 
@@ -265,4 +264,19 @@ public class SplayTree
 
         private static SplayNode newNode = null;  // Used between different inserts
         private static SplayNode header = new SplayNode( null ); // For splay
+
+    @Override
+    public void insertar(NodoRedBlack<Association<String, String>> nodo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String Buscar(String palabra, NodoRedBlack<Association<String, String>> nodo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertar(String x) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
