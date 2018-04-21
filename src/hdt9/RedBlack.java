@@ -18,9 +18,12 @@ import java.util.regex.Pattern;
  */
 public class RedBlack {
     private NodoRedBlack<Association<String,String>> raiz;
-    public RedBlack() throws FileNotFoundException {
+    public RedBlack(String s) throws FileNotFoundException {
         raiz = null;
-	llenar("./diccionario.txt");
+	llenar(s);
+    }
+    public RedBlack()  {
+        raiz = null;
     }
     /**
     *
@@ -45,11 +48,13 @@ public class RedBlack {
      * @return
      */
     public void insertar(NodoRedBlack<Association <String,String>> nodo) {
-	NodoRedBlack y = null;
+	NodoRedBlack<Association <String,String>> y = null;
         NodoRedBlack<Association <String,String>> x = raiz;
         while (x!=null){
             y = x;
-            if (nodo.getValor().key.compareTo(x.getValor().key) == -1)
+            String key1 = nodo.getValor().key;
+            String key2 = y.getValor().key;
+            if (key1.compareTo(key2) < 0)
                 x = x.getIzquierda();
             else 
                 x = x.getDerecha();    
@@ -58,14 +63,16 @@ public class RedBlack {
         if (y == null){
             raiz = nodo;
         } else {
-            if (nodo.getValor().key.compareTo(x.getValor().key) == -1) {
+            String key1 = nodo.getValor().key;
+            String key2 = y.getValor().key;
+            if (key1.compareTo(key2) < 0) {
                 y.setIzquierda(nodo);
-            } else {
+            } else  {
                 y.setDerecha(nodo);
             }
         }
         nodo.setColor(true);
-        arreglar(nodo);
+        //arreglar(nodo);
     }
     public void rotacionIzquierda(NodoRedBlack x) {
         NodoRedBlack y = x.getDerecha();
@@ -103,43 +110,48 @@ public class RedBlack {
     }
     public void arreglar(NodoRedBlack<Association <String,String>> z){
         NodoRedBlack y = null;
-        while (z.getParent().isColor()){
-            if (z.getParent().equals(z.getParent().getParent().getIzquierda())){
-                y = z.getParent().getParent().getDerecha();
-                if (y.isColor()){
-                    z.getParent().setColor(false);
-                    y.setColor(false);
-                    z.getParent().getParent().setColor(true);
-                    z = z.getParent().getParent();
-                }
-                else{ 
-                    if (z.equals(z.getParent().getDerecha())){
-                        z = z.getParent();
-                        rotacionIzquierda(z);
+        if (z.getParent() != null) {
+            while (z.getParent().isColor()){
+                
+                if (z.getParent().equals(z.getParent().getParent().getIzquierda())){
+                    y = z.getParent().getParent().getDerecha();
+                    if (y.isColor()){
+                        z.getParent().setColor(false);
+                        y.setColor(false);
+                        z.getParent().getParent().setColor(true);
+                        z = z.getParent().getParent();
                     }
-                    z.getParent().setColor(false);
-                    z.getParent().getParent().setColor(true);
-                    rotacionDerecha(z);
-                }
-            } else {
-               y = z.getParent().getParent().getIzquierda();
-                if (y.isColor()){
-                    z.getParent().setColor(false);
-                    y.setColor(false);
-                    z.getParent().getParent().setColor(true);
-                    z = z.getParent().getParent();
-                }
-                else{ 
-                    if (z.equals(z.getParent().getDerecha())){
-                        z = z.getParent();
+                    else{ 
+                        if (z.equals(z.getParent().getDerecha())){
+                            z = z.getParent();
+                            rotacionIzquierda(z);
+                        }
+                        z.getParent().setColor(false);
+                        z.getParent().getParent().setColor(true);
                         rotacionDerecha(z);
                     }
-                    z.getParent().setColor(false);
-                    z.getParent().getParent().setColor(true);
-                    rotacionIzquierda(z);
-                } 
+                } else {
+                   y = z.getParent().getParent().getIzquierda();
+                    if (y.isColor()){
+                        z.getParent().setColor(false);
+                        y.setColor(false);
+                        z.getParent().getParent().setColor(true);
+                        z = z.getParent().getParent();
+                    }
+                    else{ 
+                        if (z.equals(z.getParent().getDerecha())){
+                            z = z.getParent();
+                            rotacionDerecha(z);
+                        }
+                        z.getParent().setColor(false);
+                        z.getParent().getParent().setColor(true);
+                        rotacionIzquierda(z);
+                    } 
+                }
+
             }
         }
+        raiz.setColor(false);
     }
 
 /**
@@ -173,9 +185,10 @@ public String Buscar(String palabra, NodoRedBlack<Association <String,String>> n
 public Map<String, String> coleccion(Map<String, String> mapa, NodoRedBlack<Association <String, String>> nodo) {
 	if (nodo.getIzquierda() != null)
 		mapa = coleccion(mapa, nodo.getIzquierda());
-	mapa.put(nodo.getValor().getKey().toString(), nodo.getValor().getValue().toString());
-	if (nodo.getDerecha() != null)
+        else if (nodo.getDerecha() != null)
 		mapa = coleccion(mapa, nodo.getDerecha());
+        else 
+            mapa.put(nodo.getValor().getKey().toString(), nodo.getValor().getValue().toString());
 	return mapa;
 }
 
@@ -184,11 +197,12 @@ public Map<String, String> coleccion(Map<String, String> mapa, NodoRedBlack<Asso
        File f = new File("./diccionario.txt");
        FileReader fr = new FileReader(f);
        BufferedReader br = new BufferedReader (fr);
-       NodoRedBlack<Association<String,String>> nodo = null;
        try {
             while ((linea = br.readLine()) != null) {
+                NodoRedBlack<Association<String,String>> nodo = null;
 		linea = linea.substring(linea.indexOf('(') + 1, linea.indexOf(')'));
                 nodo = new NodoRedBlack(linea);
+                insertar(nodo);
             }
         br.close();
 	fr.close();

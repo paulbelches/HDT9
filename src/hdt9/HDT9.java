@@ -26,13 +26,14 @@ public class HDT9 {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
-		Diccionario diccionario = new Diccionario();
-		Map<String, String> mapa = diccionario.coleccion(new TreeMap<String, String>(), diccionario.getRaiz());
+                //Diccionario diccionario = new Diccionario();
+		RedBlack diccionario = new RedBlack("./diccionario.txt");
+		/*Map<String, String> mapa = diccionario.coleccion(new TreeMap<String, String>(), diccionario.getRaiz());
 		// Coleccion
 		for (Map.Entry<String, String> entry : mapa.entrySet()) {
 			System.out.println("(" + entry.getKey() + "," + entry.getValue() + ")");
 		}
-
+                */
 		File f;
 		FileReader fr;
 		BufferedReader br;

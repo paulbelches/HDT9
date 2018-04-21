@@ -118,7 +118,6 @@ public class Diccionario {
         try {
 
 			while ((linea = br.readLine()) != null) {
-				;
 				linea = linea.substring(linea.indexOf('(') + 1, linea.indexOf(')'));
 				nodo = insertar(linea, nodo);
 			}
