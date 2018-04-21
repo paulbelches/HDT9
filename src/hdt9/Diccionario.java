@@ -135,5 +135,36 @@ public class Diccionario {
 		}
 		return nodo;
 	}
+    
+    
+    	public SplayNode<Association <String,String>> insertar(String valor, SplayNode<Association <String,String>> nodo) {
+		if (nodo == null) {
+			nodo = new SplayNode<Association<String,String>>(valor);
+		} else {
+			String sep = Pattern.quote(",");
+			String[] partes2 = valor.split(sep);
+			String s = nodo.getValor().key.toString();
+			// Revisar si el valor es mayor
+			if (s.compareTo(partes2[0]) < 0) {
+				nodo.setRight(insertar(valor, nodo.getRight()));
+			} else {
+				nodo.setLeft(insertar(valor, nodo.getLeft()));
+			}
+		}
+		return nodo;
+	}
 
+        	public String Buscar(String palabra, SplayNode<Association <String,String>> nodo) {
+		String s = nodo.getValor().key.toString();
+		if (s.compareTo(palabra) == 0) {
+			return nodo.getValor().value.toString();
+		} else {
+			if ((s.compareTo(palabra) < 0) && (nodo.getRight() != null)) {
+				return Buscar(palabra, nodo.getRight());
+			} else if (nodo.getLeft() != null) {
+				return Buscar(palabra, nodo.getLeft());
+			} else
+				return "*" + palabra + "*";
+		}
+	}
 }
